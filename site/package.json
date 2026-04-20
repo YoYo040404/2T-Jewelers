@@ -1,9 +1,0 @@
-{
-  "name": "2t-jewelers-site-export",
-  "private": true,
-  "version": "1.0.0",
-  "scripts": {
-    "start": "python3 -m http.server 4173",
-    "serve": "python3 -m http.server 4173"
-  }
-}

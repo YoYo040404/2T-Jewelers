@@ -1,161 +1,17 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>2T Jewelers — Showcase Microsite</title>
-<link rel="stylesheet" href="styles/site.css"/>
-<style>
-  html, body { margin: 0; padding: 0; background: #f0eee9; font-family: 'Space Grotesk', system-ui, sans-serif; overscroll-behavior: none; }
-  .tweaks-panel {
-    position: fixed; right: 16px; bottom: 16px; z-index: 200;
-    background: #14110E; color: #EDE6D7; border: 1px solid rgba(212,162,76,0.45);
-    border-radius: 4px; padding: 14px 16px; width: 260px;
-    font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 12px;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
-    display: none;
-  }
-  .tweaks-panel.active { display: block; }
-  .tweaks-panel h3 { margin: 0 0 12px; font-family: 'DM Serif Display', serif; font-weight: 400; font-size: 18px; color: #F2D27A; letter-spacing: 0.02em; }
-  .tweaks-panel label { display: block; margin: 10px 0 4px; text-transform: uppercase; letter-spacing: 0.14em; font-size: 10px; color: #B8AE9A; }
-  .tweaks-panel .opts { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-  .tweaks-panel .opt { padding: 8px 10px; background: #0A0907; border: 1px solid rgba(212,162,76,0.2); color: #EDE6D7; cursor: pointer; text-align: center; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; transition: all 120ms; }
-  .tweaks-panel .opt.active { background: linear-gradient(180deg, #F6E3A4 0%, #E8C268 40%, #B68931 100%); color: #1A1308; border-color: transparent; font-weight: 600; }
-  .tweaks-panel .switch { display: flex; gap: 6px; }
-  .canvas-hint { position: fixed; top: 16px; left: 16px; z-index: 150; font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 11px; color: #5a4a2a; letter-spacing: 0.1em; text-transform: uppercase; background: rgba(255,255,255,0.6); padding: 6px 10px; border: 1px solid rgba(0,0,0,0.08); }
-</style>
-<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>2T Jewelers</title>
+  <meta http-equiv="refresh" content="0; url=/" />
+  <script>window.location.replace('/');</script>
+  <style>body{margin:0;background:#0a0907;color:#ede6d7;font-family:system-ui,sans-serif;display:grid;place-items:center;min-height:100vh;padding:24px;text-align:center}</style>
 </head>
 <body>
-  <div class="canvas-hint">SCROLL · PINCH · DRAG TO PAN — MOBILE & DESKTOP SIDE BY SIDE</div>
-  <div id="root"></div>
-  <div class="tweaks-panel" id="tweaks-panel">
-    <h3>Tweaks</h3>
-    <label>Gold intensity</label>
-    <div class="opts" data-knob="gold">
-      <div class="opt" data-value="low">Low</div>
-      <div class="opt active" data-value="med">Medium</div>
-      <div class="opt" data-value="high">High</div>
-      <div class="opt" data-value="off">Off</div>
-    </div>
-    <label>Product card style</label>
-    <div class="opts" data-knob="cardStyle">
-      <div class="opt active" data-value="editorial">Editorial</div>
-      <div class="opt" data-value="commerce">Commerce</div>
-    </div>
-    <label>Sticky mobile CTA</label>
-    <div class="switch" data-knob="stickyCTA">
-      <div class="opt active" data-value="on" style="flex:1">On</div>
-      <div class="opt" data-value="off" style="flex:1">Off</div>
-    </div>
-  </div>
-
-  <script type="text/babel" src="design-canvas.jsx"></script>
-  <script type="text/babel" src="ios-frame.jsx"></script>
-  <script type="text/babel" src="browser-window.jsx"></script>
-  <script type="text/babel" src="src/icons.jsx"></script>
-  <script type="text/babel" src="src/data.jsx"></script>
-  <script type="text/babel" src="src/site-hero.jsx"></script>
-  <script type="text/babel" src="src/site-catalog.jsx"></script>
-  <script type="text/babel" src="src/site-custom.jsx"></script>
-  <script type="text/babel" src="src/site-shell.jsx"></script>
-
-  <script type="text/babel" data-presets="react">
-    const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
-      "gold": "low",
-      "cardStyle": "editorial",
-      "stickyCTA": "on"
-    }/*EDITMODE-END*/;
-
-    function App() {
-      const [tweaks, setTweaks] = React.useState(TWEAK_DEFAULTS);
-
-      // Apply gold intensity to CSS variables
-      React.useEffect(() => {
-        const root = document.documentElement;
-        const map = {
-          off:  { line: 'rgba(237,230,215,0.1)', lineStrong: 'rgba(237,230,215,0.2)', goldMain: '#EDE6D7', grad: 'linear-gradient(180deg,#EDE6D7,#B8AE9A)' },
-          low:  { line: 'rgba(212,162,76,0.08)', lineStrong: 'rgba(212,162,76,0.2)', goldMain: '#C9A766', grad: 'linear-gradient(180deg,#E8CE8A,#B88E3F)' },
-          med:  { line: 'rgba(212,162,76,0.14)', lineStrong: 'rgba(212,162,76,0.32)', goldMain: '#D4A24C', grad: 'linear-gradient(180deg,#F6E3A4,#E8C268 40%,#B68931)' },
-          high: { line: 'rgba(242,210,122,0.22)', lineStrong: 'rgba(242,210,122,0.55)', goldMain: '#F2D27A', grad: 'linear-gradient(180deg,#FFF0C8,#F2D27A 40%,#C79836)' },
-        };
-        const v = map[tweaks.gold] || map.med;
-        root.style.setProperty('--line', v.line);
-        root.style.setProperty('--line-strong', v.lineStrong);
-        root.style.setProperty('--gold-2', v.goldMain);
-        root.style.setProperty('--gold-grad', v.grad);
-      }, [tweaks.gold]);
-
-      // Tweaks UI wiring (imperative, cheap)
-      React.useEffect(() => {
-        const panel = document.getElementById('tweaks-panel');
-        const handleClick = (e) => {
-          const opt = e.target.closest('.opt');
-          if (!opt) return;
-          const knob = opt.parentElement.dataset.knob;
-          const val = opt.dataset.value;
-          // visual
-          opt.parentElement.querySelectorAll('.opt').forEach(o => o.classList.toggle('active', o === opt));
-          setTweaks(t => ({ ...t, [knob]: val }));
-        };
-        panel.addEventListener('click', handleClick);
-
-        // listen for host messages
-        const onMsg = (e) => {
-          if (e.data?.type === '__activate_edit_mode') panel.classList.add('active');
-          if (e.data?.type === '__deactivate_edit_mode') panel.classList.remove('active');
-        };
-        window.addEventListener('message', onMsg);
-        // announce
-        window.parent.postMessage({ type: '__edit_mode_available' }, '*');
-        return () => { panel.removeEventListener('click', handleClick); window.removeEventListener('message', onMsg); };
-      }, []);
-
-      // Persist keys
-      React.useEffect(() => {
-        window.parent.postMessage({ type: '__edit_mode_set_keys', edits: tweaks }, '*');
-      }, [tweaks]);
-
-      return (
-        <DesignCanvas>
-          <DCSection title="2T Jewelers — Showcase Microsite" subtitle="Mobile-first prototype · Desktop view alongside · Scroll inside each frame. Click WhatsApp CTAs, FAQ, tabs.">
-            <DCArtboard label="iPhone 15 Pro · 402×874 · Home scroll" width={402} height={874} style={{ borderRadius: 48 }}>
-              <IOSDevice dark={true}>
-                <div className="t2 t2-scroll" style={{ height: '100%', overflow: 'auto', background: 'var(--ink-0)' }}>
-                  <Microsite variant="mobile" cardStyle={tweaks.cardStyle} stickyCTA={tweaks.stickyCTA === 'on'} />
-                </div>
-              </IOSDevice>
-            </DCArtboard>
-
-            <DCPostIt top={-4} left={420} rotate={-2} width={200}>
-              Mobile-first. Sticky WhatsApp bar stays glued to the thumb. Try scrolling inside the frame →
-            </DCPostIt>
-
-            <DCArtboard label="Desktop · 2tjewelers.com · 1280×880" width={1280} height={880}>
-              <ChromeWindow
-                tabs={[{ title: '2T Jewelers — Pittsburgh' }, { title: 'Custom Orders' }, { title: 'Instagram' }]}
-                activeIndex={0}
-                url="https://2tjewelers.com"
-                width={1280}
-                height={880}
-              >
-                <div className="t2 t2-scroll" style={{ height: '100%', overflow: 'auto', background: 'var(--ink-0)' }}>
-                  <Microsite variant="desktop" cardStyle={tweaks.cardStyle} stickyCTA={false} />
-                </div>
-              </ChromeWindow>
-            </DCArtboard>
-
-            <DCPostIt top={-4} left={1300} rotate={1.5} width={220}>
-              Same source of truth as mobile — reflowed. Logo is the anchor; gold used with restraint. Try the FAQ accordion.
-            </DCPostIt>
-          </DCSection>
-        </DesignCanvas>
-      );
-    }
-
-    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
-  </script>
+  <main>
+    <h1>2T Jewelers</h1>
+    <p>This legacy export path now redirects to the single runtime at <code>/</code>.</p>
+  </main>
 </body>
 </html>
