@@ -1,0 +1,187 @@
+/* 2T Jewelers — shared site styles */
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --ink-0: #0A0907;           /* true black */
+  --ink-1: #100D0A;           /* near black */
+  --ink-2: #16120E;           /* graphite */
+  --ink-3: #1E1A14;           /* panel */
+  --ink-4: #2A241C;           /* elevated */
+  --line: rgba(212, 162, 76, 0.14);
+  --line-strong: rgba(212, 162, 76, 0.32);
+
+  --gold-0: #F6E3A4;
+  --gold-1: #F2D27A;
+  --gold-2: #D4A24C;
+  --gold-3: #A8792E;
+  --gold-grad: linear-gradient(180deg, #F6E3A4 0%, #E8C268 40%, #B68931 100%);
+
+  --ice: #E8EEF4;
+  --ice-dim: #AEB6BF;
+
+  --fg: #EDE6D7;
+  --fg-dim: #B8AE9A;
+  --fg-mute: #7C7465;
+
+  --serif: 'DM Serif Display', 'Playfair Display', Georgia, serif;
+  --sans: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
+}
+
+/* Gold intensity levels driven by Tweaks — overridden per-variant */
+[data-gold="low"] {
+  --gold-ui: rgba(212, 162, 76, 0.55);
+}
+[data-gold="med"] {
+  --gold-ui: rgba(242, 210, 122, 0.85);
+}
+[data-gold="high"] {
+  --gold-ui: #F2D27A;
+}
+
+.t2 {
+  font-family: var(--sans);
+  color: var(--fg);
+  background: var(--ink-0);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.5;
+}
+.t2 *, .t2 *::before, .t2 *::after { box-sizing: border-box; }
+
+.t2 .serif { font-family: var(--serif); font-weight: 400; letter-spacing: -0.01em; }
+.t2 .mono  { font-family: var(--mono); }
+.t2 .label { font-family: var(--sans); font-weight: 500; text-transform: uppercase; letter-spacing: 0.13em; font-size: 11px; }
+.t2 .eyebrow { font-family: var(--sans); font-weight: 500; text-transform: uppercase; letter-spacing: 0.2em; font-size: 10.5px; color: var(--gold-2); }
+
+/* Gold fill text */
+.t2 .gold-text {
+  background: linear-gradient(180deg, #F6E3A4 0%, #E8C268 48%, #B68931 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Hairline separator */
+.t2 .hr { height: 1px; background: var(--line); width: 100%; }
+.t2 .hr-strong { height: 1px; background: var(--line-strong); width: 100%; }
+
+/* Chip */
+.t2 .chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 10px; border-radius: 999px;
+  font-family: var(--sans); font-weight: 500;
+  font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase;
+  border: 1px solid var(--line-strong);
+  color: var(--fg-dim); background: rgba(255,255,255,0.015);
+  white-space: nowrap;
+}
+.t2 .chip.gold { color: #F2D27A; border-color: rgba(242,210,122,0.45); background: rgba(212,162,76,0.08); }
+.t2 .chip.ice  { color: var(--ice); border-color: rgba(232,238,244,0.35); background: rgba(232,238,244,0.04); }
+.t2 .chip.dot::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+
+/* CTA — primary (gold) */
+.t2 .btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  padding: 13px 21px; border-radius: 3px;
+  font-family: var(--sans); font-weight: 600; font-size: 13.5px;
+  letter-spacing: 0.095em; text-transform: uppercase;
+  border: 1px solid transparent; cursor: pointer; user-select: none;
+  transition: transform 120ms ease, background 120ms ease, border-color 120ms ease, box-shadow 120ms ease, color 120ms ease;
+  min-height: 42px;
+}
+.t2 .btn-primary {
+  background: var(--gold-grad);
+  color: #1A1308;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.35), 0 1px 0 rgba(0,0,0,0.4), 0 10px 22px rgba(0,0,0,0.28);
+}
+.t2 .btn-primary:hover { transform: translateY(-1px); }
+.t2 .btn-ghost {
+  background: rgba(255,255,255,0.01); color: var(--fg);
+  border-color: rgba(237,230,215,0.28);
+}
+.t2 .btn-ghost:hover { border-color: var(--gold-2); color: var(--gold-1); box-shadow: 0 8px 16px rgba(0,0,0,0.2); }
+.t2 .btn-sm { padding: 10px 16px; font-size: 12px; }
+
+/* Shimmer (hero video stand-in) */
+@keyframes t2-shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+.t2 .shimmer-bg {
+  background:
+    linear-gradient(100deg,
+      rgba(255, 220, 150, 0) 30%,
+      rgba(255, 220, 150, 0.18) 48%,
+      rgba(255, 255, 255, 0.05) 52%,
+      rgba(255, 220, 150, 0) 70%),
+    radial-gradient(1200px 500px at 50% 60%, rgba(212,162,76,0.18), transparent 70%),
+    #0A0907;
+  background-size: 200% 100%, 100% 100%, 100% 100%;
+  animation: t2-shimmer 6.5s linear infinite;
+}
+
+/* Stripe placeholder for product imagery */
+.t2 .ph {
+  position: relative; overflow: hidden;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 14px),
+    radial-gradient(120% 80% at 50% 40%, rgba(212,162,76,0.10), transparent 60%),
+    #14110E;
+  background-size: 20px 20px, 100% 100%, 100% 100%;
+  border-radius: 2px;
+}
+.t2 .ph::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(60% 40% at 50% 50%, rgba(255,255,255,0.06), transparent 70%);
+  pointer-events: none;
+}
+.t2 .ph-caption {
+  position: absolute; left: 10px; bottom: 10px;
+  font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.06em;
+  color: rgba(237,230,215,0.55); text-transform: uppercase;
+  padding: 4px 7px; background: rgba(10,9,7,0.7);
+  border: 1px solid rgba(237,230,215,0.10);
+}
+
+/* Card base */
+.t2 .card {
+  background: var(--ink-2);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+}
+.t2 .card:hover { border-color: var(--line-strong); }
+
+.t2 a, .t2 button {
+  -webkit-tap-highlight-color: rgba(212,162,76,0.15);
+}
+
+/* Small icon — stroked glyphs */
+.t2 .ic { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Section wrapper */
+.t2 .section { padding: 56px 20px; }
+.t2 .section-desktop { padding: 88px 64px; }
+
+/* Custom scrollbar inside frames */
+.t2-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
+.t2-scroll::-webkit-scrollbar-thumb { background: rgba(212,162,76,0.25); border-radius: 3px; }
+.t2-scroll::-webkit-scrollbar-track { background: transparent; }
+
+/* WhatsApp green accent */
+.t2 .wa { color: #25D366; }
+.t2 .btn-wa { background: #25D366; color: #0A2512; }
+.t2 .btn-wa:hover { background: #2EE373; }
+
+/* Misc */
+.t2 .kbd {
+  font-family: var(--mono); font-size: 10.5px;
+  padding: 2px 6px; border: 1px solid var(--line-strong);
+  color: var(--fg-dim); border-radius: 2px;
+}
+
+@media (max-width: 640px) {
+  .t2 .btn {
+    min-height: 44px;
+  }
+}
