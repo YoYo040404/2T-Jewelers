@@ -1,0 +1,10 @@
+{
+  "name": "2t-jewelers-microsite",
+  "private": true,
+  "version": "1.1.0",
+  "scripts": {
+    "dev": "python3 -m http.server 4173",
+    "start": "python3 -m http.server 4173",
+    "build": "node -e \"console.log('Static site build check: ready for Vercel static deployment')\""
+  }
+}

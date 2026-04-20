@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>2T Jewelers — Inquiry-First Showcase</title>
+  <meta name="description" content="2T Jewelers showcase microsite for chains, pendants, watches, grillz, and custom jewelry inquiries."/>
+  <link rel="stylesheet" href="styles/site.css"/>
+  <style>html,body{margin:0;padding:0;background:#0a0907;font-family:'Space Grotesk',system-ui,sans-serif;scroll-behavior:smooth;}</style>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel" src="src/icons.jsx"></script>
+  <script type="text/babel" src="src/data.jsx"></script>
+  <script type="text/babel" src="src/site-hero.jsx"></script>
+  <script type="text/babel" src="src/site-catalog.jsx"></script>
+  <script type="text/babel" src="src/site-custom.jsx"></script>
+  <script type="text/babel" src="src/site-shell.jsx"></script>
+
+  <script type="text/babel" data-presets="react">
+    function App() {
+      const [isMobile, setIsMobile] = React.useState(window.innerWidth < 900);
+
+      React.useEffect(() => {
+        const onResize = () => setIsMobile(window.innerWidth < 900);
+        window.addEventListener('resize', onResize);
+        return () => window.removeEventListener('resize', onResize);
+      }, []);
+
+      return <Microsite variant={isMobile ? 'mobile' : 'desktop'} cardStyle="editorial" stickyCTA={true} />;
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>
